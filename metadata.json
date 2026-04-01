@@ -1,0 +1,7 @@
+{
+  "name": "Sejal Makeover - Luxury Beauty Salon",
+  "description": "Premium luxury makeup and beauty studio in Latur, Maharashtra. Specializing in bridal makeup, hair treatments, and professional training.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
