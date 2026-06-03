@@ -16,7 +16,18 @@ async function startServer() {
 
   // API route for booking
   app.post("/api/book", async (req, res) => {
-    const { fullName, phoneNumber, service, date, time, message } = req.body;
+    const { fullName, phoneNumber, service, date, time, message } = req.body || {};
+
+    if (!fullName || !phoneNumber || !service || !date) {
+      return res.status(400).json({ error: "Required fields are missing: fullName, phoneNumber, service, date." });
+    }
+
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("Missing EMAIL_USER or EMAIL_PASS environment variables.");
+      return res.status(500).json({
+        error: "Backend mail setup issue: EMAIL_USER or EMAIL_PASS is not configured in your dashboard under Settings > Environment Variables."
+      });
+    }
 
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -55,9 +66,17 @@ async function startServer() {
     try {
       await transporter.sendMail(mailOptions);
       res.status(200).json({ message: "Booking request sent successfully!" });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending email:", error);
-      res.status(500).json({ error: "Failed to send booking request." });
+      
+      const errorMessage = error?.message || "";
+      if (error?.code === 'EAUTH' || errorMessage.includes('535-5.7.8') || errorMessage.includes('Username and Password not accepted')) {
+        res.status(500).json({
+          error: "Gmail authentication failed. You MUST use a 16-character 'App Password' from Google, NOT your regular password. Enable 2-step verification, then select App Passwords to create one."
+        });
+      } else {
+        res.status(500).json({ error: "Failed to send booking request email. Adjust your credentials or contact via WhatsApp." });
+      }
     }
   });
 

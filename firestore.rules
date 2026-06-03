@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Bookings collection
+    match /bookings/{bookingId} {
+      allow create: if bookingId is string && bookingId.size() <= 128
+        && 'fullName' in request.resource.data && request.resource.data['fullName'] is string && request.resource.data['fullName'].size() > 0 && request.resource.data['fullName'].size() <= 128
+        && 'phoneNumber' in request.resource.data && request.resource.data['phoneNumber'] is string && request.resource.data['phoneNumber'].size() > 0 && request.resource.data['phoneNumber'].size() <= 32
+        && 'service' in request.resource.data && request.resource.data['service'] is string && request.resource.data['service'].size() > 0 && request.resource.data['service'].size() <= 128
+        && 'date' in request.resource.data && request.resource.data['date'] is string && request.resource.data['date'].size() > 0 && request.resource.data['date'].size() <= 32
+        && 'createdAt' in request.resource.data && request.resource.data['createdAt'] == request.time
+        && (!('time' in request.resource.data) || (request.resource.data['time'] is string && request.resource.data['time'].size() <= 32))
+        && (!('message' in request.resource.data) || (request.resource.data['message'] is string && request.resource.data['message'].size() <= 1024));
+    }
+  }
+}

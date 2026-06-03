@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "booking": {
+      "title": "Booking Request",
+      "description": "A beauty or makeup booking request made by a customer.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Full name of the customer"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Contact phone number of the customer"
+        },
+        "service": {
+          "type": "string",
+          "description": "Selected service"
+        },
+        "date": {
+          "type": "string",
+          "description": "Booking date"
+        },
+        "time": {
+          "type": "string",
+          "description": "Booking time"
+        },
+        "message": {
+          "type": "string",
+          "description": "Any additional message or request"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation"
+        }
+      },
+      "required": [
+        "fullName",
+        "phoneNumber",
+        "service",
+        "date",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/bookings/{bookingId}": {
+      "schema": "booking",
+      "description": "Collection of incoming booking requests."
+    }
+  }
+}

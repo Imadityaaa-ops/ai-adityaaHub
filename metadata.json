@@ -3,5 +3,8 @@
   "description": "Premium luxury makeup and beauty studio in Latur, Maharashtra. Specializing in bridal makeup, hair treatments, and professional training.",
   "requestFramePermissions": [
     "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
   ]
 }

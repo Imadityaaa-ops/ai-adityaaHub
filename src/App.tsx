@@ -27,6 +27,13 @@ import {
   CreditCard
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'motion/react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db, handleFirestoreError, OperationType } from './firebase';
+
+import regeneratedHeroLogo from './assets/images/regenerated_image_1780323875191.png';
+import regeneratedNavLogo from './assets/images/regenerated_image_1780323945968.png';
+import regeneratedBookNowQr from './assets/images/regenerated_image_1780323981741.jpg';
+import regeneratedContactQr from './assets/images/regenerated_image_1780323984767.jpg';
 
 // --- Types ---
 interface Service {
@@ -135,6 +142,29 @@ export default function App() {
     setSubmitStatus(null);
 
     try {
+      // 1. Save to Cloud Firestore
+      const firestorePayload: any = {
+        fullName: bookingForm.fullName,
+        phoneNumber: bookingForm.phoneNumber,
+        service: bookingForm.service,
+        date: bookingForm.date,
+        createdAt: serverTimestamp()
+      };
+      if (bookingForm.time) {
+        firestorePayload.time = bookingForm.time;
+      }
+      if (bookingForm.message) {
+        firestorePayload.message = bookingForm.message;
+      }
+
+      try {
+        await addDoc(collection(db, 'bookings'), firestorePayload);
+      } catch (fbError) {
+        // Instrument to parse and catch security/quota errors using specialized guidelines
+        handleFirestoreError(fbError, OperationType.WRITE, 'bookings');
+      }
+
+      // 2. Forward to email dispatch service
       const response = await fetch('/api/book', {
         method: 'POST',
         headers: {
@@ -143,14 +173,22 @@ export default function App() {
         body: JSON.stringify(bookingForm),
       });
 
+      const data = await response.json().catch(() => ({}));
+
       if (response.ok) {
-        setSubmitStatus({ type: 'success', message: 'Booking request sent successfully! We will contact you shortly.' });
+        setSubmitStatus({ 
+          type: 'success', 
+          message: 'Booking request received! Your info is saved in our database and successfully sent to our email. We will contact you shortly.' 
+        });
         setBookingForm({ fullName: '', phoneNumber: '', service: '', date: '', time: '', message: '' });
       } else {
-        throw new Error('Failed to send booking request.');
+        throw new Error(data.error || 'Failed to send email confirmation, but your booking is securely registered in our database.');
       }
-    } catch (error) {
-      setSubmitStatus({ type: 'error', message: 'Something went wrong. Please try again or contact us via WhatsApp.' });
+    } catch (error: any) {
+      setSubmitStatus({ 
+        type: 'error', 
+        message: error.message || 'Something went wrong. Please try again or contact us via WhatsApp.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -180,9 +218,9 @@ export default function App() {
       {/* Sticky Navbar */}
       <nav className="fixed top-0 w-full z-50 glass border-b border-gold/10 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('hero')}>
-          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold/30 shadow-lg">
+          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-xl bg-stone-950 flex items-center justify-center">
             <img 
-              src="/logo.png" 
+              src={regeneratedNavLogo} 
               alt="Sejal Makeover Logo" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
@@ -268,9 +306,9 @@ export default function App() {
           className="max-w-4xl"
         >
           <div className="flex justify-center mb-8">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gold/30 shadow-2xl gold-glow">
+            <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-gold/50 shadow-2xl gold-glow bg-stone-950 flex items-center justify-center animate-pulse">
               <img 
-                src="/logo.png" 
+                src={regeneratedHeroLogo} 
                 alt="Sejal Makeover Logo" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
@@ -575,17 +613,83 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass p-4 rounded-[2rem] border border-gold/20 shadow-xl text-center flex flex-col items-center"
+              className="relative p-6 rounded-[2.5rem] border border-[#00b9f5]/30 shadow-2xl text-center flex flex-col items-center bg-gradient-to-b from-[#e8f6ff] to-white"
             >
-              <div className="w-full h-full overflow-hidden rounded-3xl shadow-lg border border-gold/10">
-                <img 
-                  src="/payment-qr.png" 
-                  alt="Sejal Beauty Parlor Payment QR" 
-                  className="w-full h-auto object-contain"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="w-full max-w-sm rounded-[2rem] bg-white border border-[#00b9f5]/15 overflow-hidden p-5 shadow-lg flex flex-col justify-between">
+                {/* Header Row */}
+                <div className="flex justify-between items-center mb-5 gap-3">
+                  {/* Left Column logos */}
+                  <div className="flex flex-col items-start">
+                    <div className="flex items-center gap-1">
+                      <span className="text-xl font-black text-[#00b9f5]">pay</span>
+                      <span className="text-xl font-black text-[#002e6e]">tm</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-[10px] bg-stone-150 text-stone-500 font-bold px-1 py-0.5 rounded border border-stone-200 leading-none">से</span>
+                      <span className="text-xs font-black italic tracking-tight text-[#005e82] flex items-center">
+                        U<span className="text-[#e27d14]">P</span><span className="text-[#20a44d]">I</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Column details */}
+                  <div className="flex flex-col gap-1 items-end flex-1 max-w-[200px]">
+                    <div className="bg-stone-50 border border-stone-100 rounded-md px-2 py-1 w-full text-center">
+                      <div className="text-[10px] font-bold text-stone-800 uppercase tracking-tight truncate">
+                        SEJAL BEAUTY PARLOR
+                      </div>
+                    </div>
+                    <div className="bg-stone-50 border border-stone-100 rounded-md px-2 py-1 w-full text-center">
+                      <div className="text-xs font-bold text-stone-900 tracking-wider">
+                        8830719663
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main QR Area inside the Card */}
+                <div className="bg-gradient-to-b from-[#00b9f5] to-[#005e82] p-5 rounded-3xl text-white shadow-inner flex flex-col items-center relative gap-4">
+                  
+                  {/* PayTM logo again white */}
+                  <div className="text-center">
+                    <span className="text-2xl font-black text-white">paytm</span>
+                    <div className="text-[10px] tracking-widest font-bold uppercase opacity-90 mt-0.5">Accepted Here</div>
+                  </div>
+
+                  {/* Dynamic Clear QR */}
+                  <a 
+                    href="upi://pay?pa=paytmqr6krgi5@ptys&pn=SEJAL%20BEAUTY%20PARLOR&cu=INR" 
+                    className="w-full aspect-square bg-white rounded-2xl p-4 flex items-center justify-center shadow-lg hover:scale-105 transition-transform cursor-pointer relative group"
+                    title="Click to pay directly on mobile"
+                  >
+                    <img 
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=upi://pay?pa=paytmqr6krgi5@ptys%26pn=SEJAL%2520BEAUTY%2520PARLOR%26cu=INR" 
+                      alt="Sejal Beauty Parlor Paytm QR" 
+                      className="max-w-full max-h-full object-contain"
+                      referrerPolicy="no-referrer"
+                    />
+                  </a>
+
+                  {/* UPI ID Info Text */}
+                  <div className="text-xs font-bold font-mono tracking-tight text-white bg-black/20 px-3 py-1.5 rounded-full">
+                    UPI ID: paytmqr6krgi5@ptys
+                  </div>
+
+                  {/* BHIM UPI Bottom Logos */}
+                  <div className="flex items-center justify-center gap-2 mt-1 py-1 px-3 border border-white/20 rounded-lg bg-white/5 w-full">
+                    <span className="text-[10px] font-extrabold italic tracking-tight text-white">
+                      BHIM <span className="text-[#f1ca49]">▶</span>
+                    </span>
+                    <span className="text-white/40">|</span>
+                    <span className="text-[10px] font-black italic tracking-widest text-[#5de38f]">
+                      UPI<span className="text-[#f1ca49]">▶</span>
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="mt-4 text-xs font-bold text-gold uppercase tracking-widest">Scan to Pay via UPI</div>
+              <div className="mt-6 text-sm font-bold text-stone-700 uppercase tracking-widest">
+                Scan or Tap to Pay securely via any UPI App
+              </div>
             </motion.div>
 
             {/* Location QR */}
@@ -594,17 +698,63 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="glass p-4 rounded-[2rem] border border-gold/20 shadow-xl text-center flex flex-col items-center"
+              className="relative p-6 rounded-[2.5rem] border border-[#4285F4]/30 shadow-2xl text-center flex flex-col items-center bg-gradient-to-b from-[#f8f9fa] to-white"
             >
-              <div className="w-full h-full overflow-hidden rounded-3xl shadow-lg border border-gold/10">
-                <img 
-                  src="/location-qr.png" 
-                  alt="Sejal Makeover Location QR" 
-                  className="w-full h-auto object-contain"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="w-full max-w-sm rounded-[2rem] bg-white border border-stone-150 overflow-hidden p-5 shadow-lg flex flex-col justify-between">
+                {/* Header Row */}
+                <div className="flex justify-between items-center mb-5 gap-3">
+                  {/* Google Maps Brand Style */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-xl bg-[#e8f0fe] flex items-center justify-center text-[#4285F4] shadow-sm">
+                      <MapPin className="w-6 h-6 text-[#ea4335] fill-[#ea4335]/20 animate-bounce" />
+                    </div>
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm font-black tracking-tight text-stone-800">GOOGLE MAPS</span>
+                      <span className="text-[10px] text-[#34a853] font-extrabold tracking-wider uppercase">Easy Navigation</span>
+                    </div>
+                  </div>
+
+                  {/* Location Pin Details */}
+                  <div className="flex flex-col gap-0.5 items-end max-w-[150px]">
+                    <span className="text-[11px] font-bold text-stone-700 truncate w-full text-right">Sejal Makeover</span>
+                    <span className="text-[9px] font-semibold text-stone-400 uppercase tracking-widest text-right">Latur, MH</span>
+                  </div>
+                </div>
+
+                {/* Main QR Area */}
+                <div className="bg-gradient-to-b from-[#4285F4] to-[#1a73e8] p-5 rounded-3xl text-white shadow-inner flex flex-col items-center relative gap-4">
+                  
+                  {/* Header Title inside QR Area */}
+                  <div className="text-center font-playfair">
+                    <span className="text-xl font-bold text-white tracking-wide">Studio Location</span>
+                    <div className="text-[9px] tracking-widest font-bold uppercase opacity-90 mt-0.5">Kulswamini Nagar</div>
+                  </div>
+
+                  {/* Guaranteed Dynamic QR Code Image */}
+                  <a 
+                    href="https://www.google.com/maps/search/?api=1&query=Sejal+Makeover+Kulswamini+Nagar+Latur+Maharashtra" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full aspect-square bg-white rounded-2xl p-4 flex items-center justify-center shadow-lg hover:scale-105 transition-transform cursor-pointer relative group"
+                    title="Click to open route in Google Maps"
+                  >
+                    <img 
+                      src={regeneratedBookNowQr} 
+                      alt="Sejal Makeover Location QR Code" 
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </a>
+
+                  {/* Helpful Quick action line */}
+                  <div className="text-[10px] font-bold tracking-wider text-white bg-black/20 px-3 py-1.5 rounded-full uppercase">
+                    Scan or Tap to Open Route
+                  </div>
+                </div>
               </div>
-              <div className="mt-4 text-xs font-bold text-gold uppercase tracking-widest">Scan for Studio Location</div>
+
+              <div className="mt-6 text-sm font-bold text-stone-700 uppercase tracking-widest">
+                Scan or Tap to Navigate instantly on Google Maps
+              </div>
             </motion.div>
           </div>
         </div>
@@ -832,13 +982,14 @@ export default function App() {
                 <div>
                   <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Our Studio</div>
                   <div className="text-lg font-bold text-stone-800 mb-4">Kulswamini Nagar, Latur, Maharashtra</div>
-                  <div className="w-32 h-32 rounded-2xl overflow-hidden shadow-lg border border-gold/10 bg-white p-1">
-                    <img 
-                      src="/location-qr.png" 
-                      alt="Studio Location QR" 
-                      className="w-full h-full object-contain"
-                      referrerPolicy="no-referrer"
-                    />
+                  <div className="w-32 h-32 rounded-2xl overflow-hidden shadow-lg border border-gold/10 bg-white p-1 flex items-center justify-center">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Sejal+Makeover+Kulswamini+Nagar+Latur+Maharashtra" target="_blank" rel="noopener noreferrer" title="Click to open in Google Maps">
+                      <img 
+                        src={regeneratedContactQr} 
+                        alt="Studio Location QR" 
+                        className="w-full h-full object-contain cursor-pointer hover:scale-105 transition-transform"
+                      />
+                    </a>
                   </div>
                   <div className="mt-2 text-[10px] font-bold text-gold uppercase tracking-widest">Scan for Location</div>
                 </div>
@@ -890,9 +1041,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold/30 shadow-lg">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-xl bg-stone-950 flex items-center justify-center">
                 <img 
-                  src="/logo.png" 
+                  src="/logo.svg" 
                   alt="Sejal Makeover Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -1044,7 +1195,7 @@ export default function App() {
           "@context": "https://schema.org",
           "@type": "BeautySalon",
           "name": "Sejal Makeover",
-          "image": "/logo.png",
+          "image": "/logo.svg",
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "Kulswamini Nagar",
