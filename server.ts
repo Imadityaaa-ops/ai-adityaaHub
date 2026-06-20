@@ -22,10 +22,14 @@ async function startServer() {
       return res.status(400).json({ error: "Required fields are missing: fullName, phoneNumber, service, date." });
     }
 
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error("Missing EMAIL_USER or EMAIL_PASS environment variables.");
+    const emailUser = process.env.EMAIL_USER || "ranichame.makeupartist@gmail.com";
+    const emailPassRaw = process.env.EMAIL_PASS || "xaik shci oexf yrfv";
+    const emailPass = emailPassRaw.replace(/\s+/g, ""); // strip spaces for Google App Password standard compatibility
+
+    if (!emailUser || !emailPass) {
+      console.error("Missing EMAIL_USER or EMAIL_PASS configuration.");
       return res.status(500).json({
-        error: "Backend mail setup issue: EMAIL_USER or EMAIL_PASS is not configured in your dashboard under Settings > Environment Variables."
+        error: "Backend mail setup issue: EMAIL_USER or EMAIL_PASS is not configured."
       });
     }
 
@@ -33,13 +37,13 @@ async function startServer() {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: emailUser,
+        pass: emailPass,
       },
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: emailUser,
       to: "ranichame.makeupartist@gmail.com",
       subject: `New Booking Request from ${fullName}`,
       text: `

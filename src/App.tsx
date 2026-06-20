@@ -34,6 +34,14 @@ import regeneratedHeroLogo from './assets/images/regenerated_image_1780323875191
 import regeneratedNavLogo from './assets/images/regenerated_image_1780323945968.png';
 import regeneratedBookNowQr from './assets/images/regenerated_image_1780323981741.jpg';
 import regeneratedContactQr from './assets/images/regenerated_image_1780323984767.jpg';
+import blogSkincare from './assets/images/regenerated_image_1781896578876.webp';
+import blogHaircare from './assets/images/regenerated_image_1781896583706.webp';
+import blogMakeupLast from './assets/images/regenerated_image_1781896580876.jpg';
+
+import galleryImg1 from './assets/images/regenerated_image_1781896788404.webp';
+import galleryImg3 from './assets/images/regenerated_image_1781896786835.jpg';
+import galleryImg6 from './assets/images/regenerated_image_1781896789479.webp';
+import galleryImg7 from './assets/images/regenerated_image_1781896790311.webp';
 
 // --- Types ---
 interface Service {
@@ -48,23 +56,23 @@ interface Service {
 // --- Data ---
 const SERVICES: Service[] = [
   // Makeup
-  { id: 'm1', category: 'Makeup', name: '3D Makeup', price: '₹12,000 – ₹18,000', description: 'Advanced 3D contouring and highlighting for a sculpted, camera-ready look.', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'm2', category: 'Makeup', name: 'Matte Glass Finish', price: '₹10,000 – ₹15,000', description: 'A perfect balance of matte longevity and glass-skin radiance.', image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'm3', category: 'Makeup', name: 'Bridal Makeup', price: '₹18,000 – ₹35,000', description: 'Luxury bridal transformation including draping and hair styling.', image: 'https://images.unsplash.com/photo-1595475241949-0300362846f4?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'm4', category: 'Makeup', name: 'Party Makeup', price: '₹3,000 – ₹6,000', description: 'Elegant makeup for any special occasion or event.', image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'm5', category: 'Makeup', name: 'Engagement Makeup', price: '₹10,000 – ₹18,000', description: 'Sophisticated look tailored for your engagement ceremony.', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'm6', category: 'Makeup', name: 'Maternity Shoot Makeup', price: '₹5,000 – ₹8,000', description: 'Soft, glowing makeup to celebrate your motherhood journey.', image: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'm1', category: 'Makeup', name: 'Luxury Signature Makeup', price: '₹12,000 – ₹18,000', description: 'Advanced contouring, high-definition camera-ready finish, and custom high-glamour cosmetics for special events.', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=1200' },
+  { id: 'm2', category: 'Makeup', name: 'Matte Glass Finish', price: '₹10,000 – ₹15,000', description: 'A perfect balance of matte longevity and glass-skin radiance.', image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'm3', category: 'Makeup', name: 'Bridal Makeup', price: '₹18,000 – ₹35,000', description: 'Luxury bridal transformation including draping and hair styling.', image: galleryImg1 },
+  { id: 'm4', category: 'Makeup', name: 'Party Makeup', price: '₹3,000 – ₹6,000', description: 'Elegant makeup for any special occasion or event.', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'm5', category: 'Makeup', name: 'Engagement Makeup', price: '₹10,000 – ₹18,000', description: 'Sophisticated look tailored for your engagement ceremony.', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'm6', category: 'Makeup', name: 'Maternity Shoot Makeup', price: '₹5,000 – ₹8,000', description: 'Soft, glowing makeup to celebrate your motherhood journey.', image: galleryImg3 },
   
   // Hair
-  { id: 'h1', category: 'Hair', name: 'Keratin Treatment', price: '₹4,000 – ₹8,000', description: 'Smooth, frizz-free hair with our premium keratin infusion.', image: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'h1', category: 'Hair', name: 'Keratin Treatment', price: '₹4,000 – ₹8,000', description: 'Smooth, frizz-free hair with our premium keratin infusion.', image: 'https://images.unsplash.com/photo-1595853035070-59a39fe84de3?auto=format&fit=crop&q=100&w=1200' },
   { id: 'h2', category: 'Hair', name: 'Hair Botox', price: '₹6,000 – ₹12,000', description: 'Deep conditioning treatment that repairs damaged hair fibers.', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'h3', category: 'Hair', name: 'Hair Spa', price: '₹1,200 – ₹2,500', description: 'Relaxing scalp massage and deep nourishment for healthy hair.', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'h4', category: 'Hair', name: 'Smoothening', price: '₹3,500 – ₹7,000', description: 'Get sleek, straight hair that lasts for months.', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=100&w=1200' },
-  { id: 'h5', category: 'Hair', name: 'Hair Color', price: '₹2,000 – ₹6,000', description: 'Professional global color or highlights using international brands.', image: 'https://images.unsplash.com/photo-1516914915600-896acb9c0373?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'h3', category: 'Hair', name: 'Hair Spa', price: '₹1,200 – ₹2,500', description: 'Relaxing scalp massage and deep nourishment for healthy hair.', image: galleryImg6 },
+  { id: 'h4', category: 'Hair', name: 'Smoothening', price: '₹3,500 – ₹7,000', description: 'Get sleek, straight hair that lasts for months.', image: 'https://images.unsplash.com/photo-1620331702296-11235804db31?auto=format&fit=crop&q=100&w=1200' },
+  { id: 'h5', category: 'Hair', name: 'Hair Color', price: '₹2,000 – ₹6,000', description: 'Professional global color or highlights using international brands.', image: 'https://images.unsplash.com/photo-1634449571010-02c1991976c9?auto=format&fit=crop&q=100&w=1200' },
   
   // Training
-  { id: 't1', category: 'Training', name: 'Professional Makeup Course', price: '₹45,000', description: 'Comprehensive 3-month course covering all aspects of professional makeup.', image: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&q=100&w=1200' },
-  { id: 't2', category: 'Training', name: 'Advanced Bridal Course', price: '₹35,000', description: 'Master the art of luxury Indian bridal transformations.', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=1200' },
+  { id: 't1', category: 'Training', name: 'Professional Makeup Course', price: '₹45,000', description: 'Comprehensive 3-month course covering all aspects of professional makeup.', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=100&w=1200' },
+  { id: 't2', category: 'Training', name: 'Advanced Bridal Course', price: '₹35,000', description: 'Master the art of luxury Indian bridal transformations.', image: galleryImg3 },
   { id: 't3', category: 'Training', name: 'Self Makeup Course', price: '₹8,000', description: 'Learn to do your own makeup like a pro in just 5 days.', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=100&w=1200' },
 ];
 
@@ -125,6 +133,16 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState<'Makeup' | 'Hair' | 'Training'>('Makeup');
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [showOfferPopup, setShowOfferPopup] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const [bookingForm, setBookingForm] = useState({
     fullName: '',
     phoneNumber: '',
@@ -140,6 +158,8 @@ export default function App() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+
+    let dbSaved = false;
 
     try {
       // 1. Save to Cloud Firestore
@@ -159,30 +179,53 @@ export default function App() {
 
       try {
         await addDoc(collection(db, 'bookings'), firestorePayload);
+        dbSaved = true;
       } catch (fbError) {
+        console.error("Firestore save issue:", fbError);
         // Instrument to parse and catch security/quota errors using specialized guidelines
         handleFirestoreError(fbError, OperationType.WRITE, 'bookings');
       }
 
       // 2. Forward to email dispatch service
-      const response = await fetch('/api/book', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingForm),
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.ok) {
-        setSubmitStatus({ 
-          type: 'success', 
-          message: 'Booking request received! Your info is saved in our database and successfully sent to our email. We will contact you shortly.' 
+      try {
+        const response = await fetch('/api/book', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bookingForm),
         });
-        setBookingForm({ fullName: '', phoneNumber: '', service: '', date: '', time: '', message: '' });
-      } else {
-        throw new Error(data.error || 'Failed to send email confirmation, but your booking is securely registered in our database.');
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.ok) {
+          setSubmitStatus({ 
+            type: 'success', 
+            message: 'Booking request received! Your info is saved in our database and successfully sent to our email. We will contact you shortly.' 
+          });
+          setBookingForm({ fullName: '', phoneNumber: '', service: '', date: '', time: '', message: '' });
+        } else {
+          if (dbSaved) {
+            setSubmitStatus({ 
+              type: 'success', 
+              message: 'Your booking has been successfully saved in our database! Note: Email notification is pending activation, but your slot is secure. We will contact you shortly!' 
+            });
+            setBookingForm({ fullName: '', phoneNumber: '', service: '', date: '', time: '', message: '' });
+          } else {
+            throw new Error(data.error || 'Failed to send automated confirmation.');
+          }
+        }
+      } catch (mailError) {
+        console.warn("Nodemailer service unavailable:", mailError);
+        if (dbSaved) {
+          setSubmitStatus({ 
+            type: 'success', 
+            message: 'Your booking has been successfully saved in our database! We will contact you shortly to confirm your slot.' 
+          });
+          setBookingForm({ fullName: '', phoneNumber: '', service: '', date: '', time: '', message: '' });
+        } else {
+          throw new Error('Something went wrong. Please check your network and try again, or book via WhatsApp directly.');
+        }
       }
     } catch (error: any) {
       setSubmitStatus({ 
@@ -216,7 +259,11 @@ export default function App() {
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gold z-[100] origin-left" style={{ scaleX }} />
 
       {/* Sticky Navbar */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-gold/10 px-6 py-4 flex justify-between items-center">
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 px-6 ${
+        hasScrolled 
+          ? 'py-3 bg-white/95 backdrop-blur-md shadow-[0_10px_30px_rgba(212,175,55,0.06)] border-b border-gold/15' 
+          : 'py-5 bg-stone-100/10 backdrop-blur-sm border-b border-stone-100/5'
+      } flex justify-between items-center`}>
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('hero')}>
           <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-xl bg-stone-950 flex items-center justify-center">
             <img 
@@ -237,7 +284,7 @@ export default function App() {
             <button 
               key={item} 
               onClick={() => scrollTo(item.toLowerCase())}
-              className="text-sm font-medium text-stone-600 hover:text-gold transition-colors uppercase tracking-widest"
+              className="relative text-sm font-semibold text-stone-650 hover:text-stone-900 transition-colors uppercase tracking-widest py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
             >
               {item}
             </button>
@@ -445,24 +492,33 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                whileHover={{ y: -10 }}
-                className="group cursor-pointer"
+                whileHover={{ y: -8 }}
+                className={`group cursor-pointer p-5 rounded-[2.2rem] border transition-all duration-500 relative ${
+                  service.id === 'm1'
+                    ? 'bg-gradient-to-br from-gold/5 via-stone-50/70 to-stone-50/60 hover:bg-white border-gold/30 hover:border-gold/60 shadow-[0_4px_22px_rgba(212,175,55,0.06)] hover:shadow-[0_24px_48px_rgba(212,175,55,0.12)]'
+                    : 'bg-stone-50/60 hover:bg-white border-stone-200/50 hover:border-gold/30 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.08)]'
+                }`}
                 onClick={() => setSelectedService(service)}
               >
-                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden mb-6">
+                <div className="relative aspect-[4/3] rounded-[1.6rem] overflow-hidden mb-5">
+                  {service.id === 'm1' && (
+                    <span className="absolute top-4 left-4 z-10 bg-gold text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                      Signature Look
+                    </span>
+                  )}
                   <img 
                     src={service.image} 
                     alt={service.name} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
                     <span className="text-white font-bold flex items-center gap-2">View Details <ChevronRight className="w-4 h-4" /></span>
                   </div>
                 </div>
-                <h3 className="text-2xl font-playfair font-bold text-stone-800 mb-2">{service.name}</h3>
-                <div className="text-gold font-bold text-lg mb-2">{service.price}</div>
-                <p className="text-stone-500 text-sm line-clamp-2">{service.description}</p>
+                <h3 className="text-xl font-playfair font-bold text-stone-800 mb-2 px-1">{service.name}</h3>
+                <div className="text-gold font-bold text-base mb-2 px-1">{service.price}</div>
+                <p className="text-stone-500 text-sm line-clamp-2 px-1 mb-1">{service.description}</p>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -518,12 +574,12 @@ export default function App() {
             className="grid grid-cols-2 gap-4"
           >
             <div className="space-y-4">
-              <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-[3/4] object-cover" referrerPolicy="no-referrer" />
-              <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-square object-cover" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-[3/4] object-cover" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1522337060762-ef9652223743?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-square object-cover" referrerPolicy="no-referrer" />
             </div>
             <div className="space-y-4 pt-8">
-              <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-square object-cover" referrerPolicy="no-referrer" />
-              <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-[3/4] object-cover" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-square object-cover" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=100&w=800" alt="Training" className="rounded-2xl w-full aspect-[3/4] object-cover" referrerPolicy="no-referrer" />
             </div>
           </motion.div>
         </div>
@@ -538,14 +594,14 @@ export default function App() {
 
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            'https://images.unsplash.com/photo-1595475241949-0300362846f4?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&q=100&w=1200',
-            'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&q=100&w=1200'
+            galleryImg1,
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=100&w=1200',
+            galleryImg3,
+            'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=100&w=1200',
+            'https://images.unsplash.com/photo-1515688594390-b649af70d282?auto=format&fit=crop&q=100&w=1200',
+            galleryImg6,
+            galleryImg7,
+            'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=100&w=1200'
           ].map((img, i) => (
             <motion.div 
               key={i}
@@ -935,9 +991,9 @@ export default function App() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: 'Pre-Bridal Skincare Routine', date: 'March 10, 2026', img: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=100&w=800' },
-              { title: 'Top 5 Hair Care Myths Debunked', date: 'March 05, 2026', img: 'https://images.unsplash.com/photo-1527799822344-429dfa851bc1?auto=format&fit=crop&q=100&w=800' },
-              { title: 'How to Make Your Makeup Last All Day', date: 'Feb 28, 2026', img: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=100&w=800' },
+              { title: 'Pre-Bridal Skincare Routine', date: 'March 10, 2026', img: blogSkincare },
+              { title: 'Top 5 Hair Care Myths Debunked', date: 'March 05, 2026', img: blogHaircare },
+              { title: 'How to Make Your Makeup Last All Day', date: 'Feb 28, 2026', img: blogMakeupLast },
             ].map((post, i) => (
               <div key={i} className="group cursor-pointer">
                 <div className="aspect-video rounded-3xl overflow-hidden mb-6">

@@ -26,12 +26,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Required fields are missing: fullName, phoneNumber, service, date." });
   }
 
-  const emailUser = process.env.EMAIL_USER;
-  const emailPass = process.env.EMAIL_PASS;
+  const emailUser = process.env.EMAIL_USER || "ranichame.makeupartist@gmail.com";
+  const emailPassRaw = process.env.EMAIL_PASS || "xaik shci oexf yrfv";
+  const emailPass = emailPassRaw.replace(/\s+/g, ""); // strip spaces for Google App Password standard compatibility
 
   if (!emailUser || !emailPass) {
     return res.status(500).json({
-      error: "EMAIL_USER or EMAIL_PASS environment variables are not configured on Vercel. Please add them in Vin Vercel Project Settings."
+      error: "EMAIL_USER or EMAIL_PASS is not configured."
     });
   }
 
